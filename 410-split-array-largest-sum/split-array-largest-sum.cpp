@@ -35,6 +35,7 @@ public:
         return count;
     }
     int splitArray(vector<int>& nums, int k) {
+        if(k> nums.size()) return -1;
         int low=max_ele(nums);
         int high=sum_calc(nums);
         while(low<=high)
