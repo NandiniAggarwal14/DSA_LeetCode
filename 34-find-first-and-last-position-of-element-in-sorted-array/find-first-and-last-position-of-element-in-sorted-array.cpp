@@ -1,10 +1,49 @@
 class Solution {
 public:
+    int first_occurence(vector<int> &nums, int target)
+    {
+        int low=0, high= nums.size()-1;
+        int first=-1;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(nums[mid]==target)
+            {
+                first=mid;
+                high=mid-1;
+            }
+            else if(nums[mid]<target)
+                low=mid+1;
+            else
+                high=mid-1;
+        }
+        return first;
+    }
+    int last_occurence(vector<int> &nums, int target)
+    {
+        int low=0, high= nums.size()-1;
+        int last=-1;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(nums[mid]==target)
+            {
+                last=mid;
+                low=mid+1;
+            }
+            else if(nums[mid]<target)
+                low=mid+1;
+            else
+                high=mid-1;
+        }
+        return last;
+    }
+
     vector<int> searchRange(vector<int>& nums, int target) {
-        auto lb=lower_bound(nums.begin(), nums.end(), target);
-        if(lb==nums.end() || *lb!=target)
+        int first= first_occurence(nums, target);
+        if(first==-1)
             return {-1, -1};
-        auto ub= upper_bound(nums.begin(), nums.end(), target);
-        return {(int)(lb-nums.begin()), (int)(ub-(nums.begin())-1)};
+        int last=last_occurence(nums, target);
+        return {first, last};
     }
 };
