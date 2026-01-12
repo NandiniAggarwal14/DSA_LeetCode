@@ -3,17 +3,19 @@ public:
     int lengthOfLongestSubstring(string s) {
         int len = s.length();
         int maxlen = 0;
-        for(int i=0; i<len; i++)
+        int r=0, l=0;
+        vector<int>hash(256, -1);
+        while(r<len)
         {
-            vector<int>hash(255, 0);
-            for(int j=i; j<len; j++)
+            if(hash[s[r]]!=-1)
             {
-                if(hash[s[j]]==1)
-                    break;
-                int l = j-i+1;
-                maxlen = max(maxlen, l);
-                hash[s[j]]=1;
+                if(hash[s[r]]>=l)
+                    l = hash[s[r]] + 1;
             }
+            int length = r - l + 1;
+            maxlen = max(maxlen, length);
+            hash[s[r]]=r;
+            r++;
         }
         return maxlen;
     }
