@@ -21,15 +21,10 @@ public:
                 return false;
             else if(diff > 0 && (nums[index]-nums[index+1])<0)
                 return false;
-            else if(nums[index]==nums[index+1])
+            else
             {
                 index++;
                 continue;
-                
-            }
-            else
-            {
-                index+=1;
             }
         }
         return true;
