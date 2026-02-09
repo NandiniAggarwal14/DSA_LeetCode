@@ -7,20 +7,24 @@ public:
         {
             mpp[nums[i]]++;
         }
-        priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int, int>>>pq;
+        vector<vector<int>>bucket(n+1);
         for(auto &it : mpp)
         {
             int val = it.first;
             int freq = it.second;
-            pq.push({freq, val});
-            if(pq.size()>k)
-                pq.pop();
+            bucket[freq].push_back(val);
         }
         vector<int>res;
-        while(!pq.empty())
+        for(int i = n; i>=0; i--)
         {
-            res.push_back(pq.top().second);
-            pq.pop();
+            if(bucket[i].size()==0)
+                continue;
+            while(bucket[i].size()> 0 && k>0)
+            {
+                res.push_back(bucket[i].back());
+                bucket[i].pop_back();
+                k--;
+            }
         }
         return res;
     }
