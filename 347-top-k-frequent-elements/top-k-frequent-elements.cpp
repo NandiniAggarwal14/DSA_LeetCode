@@ -7,16 +7,21 @@ public:
         {
             mpp[nums[i]]++;
         }
-        vector<pair<int, int>>vec;
-        for(auto it : mpp)
-            vec.push_back({it.first, it.second});
-        sort(vec.begin(), vec.end(), [](pair<int,int>& a, pair<int,int>& b)
+        priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int, int>>>pq;
+        for(auto &it : mpp)
         {
-            return a.second>b.second;
-        });
+            int val = it.first;
+            int freq = it.second;
+            pq.push({freq, val});
+            if(pq.size()>k)
+                pq.pop();
+        }
         vector<int>res;
-        for(int i=0; i<k; i++)
-            res.push_back(vec[i].first);
+        while(!pq.empty())
+        {
+            res.push_back(pq.top().second);
+            pq.pop();
+        }
         return res;
     }
 };
