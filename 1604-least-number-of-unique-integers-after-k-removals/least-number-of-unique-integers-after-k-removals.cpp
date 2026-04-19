@@ -6,23 +6,25 @@ public:
         {
             mpp[arr[i]]++;
         }
-        vector<pair<int, int>>vec;
+        priority_queue<int, vector<int>, greater<int>>pq;
         for(auto it:mpp)
         {
-            vec.push_back({it.second, it.first});
+            pq.push(it.second);
         }
-        int count=0;
-        sort(vec.begin(), vec.end());
-        for(int i=0; i<vec.size(); i++)
+        while(!pq.empty() && k>0)
         {
-            if(vec[i].first<=k)
+            int freq = pq.top();
+            pq.pop();
+            if(k>=freq)
             {
-                k-=vec[i].first;
-                count++;
+                k-=freq;
             }
             else
-                return vec.size()-count;
+            {
+                pq.push(freq);
+                break;
+            }
         }
-        return vec.size()-count;
+        return pq.size();
     }
 };
